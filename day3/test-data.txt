@@ -1,0 +1,2 @@
+"claim" "at" "positions" "dimensions"
+#1 @ 0,0: 2x2
