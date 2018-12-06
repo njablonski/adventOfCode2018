@@ -33,16 +33,23 @@ rectangles <- rectangles[-c(1:4)]
 
 # initialize grid and overlap counter
 grid <- matrix(rep(0, times = 1000000), nrow = 1000, ncol = 1000)
-overlaps <- 0
 
 # parsed_rectangles will contain cleaned up specs as dataframe entries
 for (row in 1:nrow(rectangles)) {
   for (x in (rectangles[row, "xpos"]+1):(rectangles[row, "xpos"] + rectangles[row, "xdim"])) {
     for (y in (rectangles[row, "ypos"]+1):(rectangles[row, "ypos"] + rectangles[row, "ydim"])) {
       grid[y,x] <- (grid[y,x] + 1)
-      if (grid[y,x] == 2) { overlaps <- (overlaps + 1) }
     }
   }
 }
 
-print(overlaps)
+# parsed_rectangles will contain cleaned up specs as dataframe entries
+for (row in 1:nrow(rectangles)) {
+  no_overlaps <- TRUE
+  for (x in (rectangles[row, "xpos"]+1):(rectangles[row, "xpos"] + rectangles[row, "xdim"])) {
+    for (y in (rectangles[row, "ypos"]+1):(rectangles[row, "ypos"] + rectangles[row, "ydim"])) {
+      if (grid[y,x] != 1) { no_overlaps <- FALSE }
+    }
+  }
+  if (no_overlaps) { print(row) }
+}
